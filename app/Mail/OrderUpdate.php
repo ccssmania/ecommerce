@@ -6,11 +6,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
+use App\Contact;
 class OrderUpdate extends Mailable
 {
     use Queueable, SerializesModels;
     public $order;
+    public $contact;
     /**
      * Create a new message instance.
      *
@@ -19,6 +20,7 @@ class OrderUpdate extends Mailable
     public function __construct($order)
     {
         $this->order = $order;
+        $this->contact = Contact::find(1);
     }
 
     /**

@@ -7,6 +7,9 @@ use InvalidArgumentException;
 use Illuminate\Contracts\Queue\Factory as FactoryContract;
 use Illuminate\Contracts\Queue\Monitor as MonitorContract;
 
+/**
+ * @mixin \Illuminate\Contracts\Queue\Queue
+ */
 class QueueManager implements FactoryContract, MonitorContract
 {
     /**
@@ -152,8 +155,7 @@ class QueueManager implements FactoryContract, MonitorContract
 
         return $this->getConnector($config['driver'])
                         ->connect($config)
-                        ->setConnectionName($name)
-                        ->setQueuePrefix($this->getQueuePrefix());
+                        ->setConnectionName($name);
     }
 
     /**
@@ -242,16 +244,6 @@ class QueueManager implements FactoryContract, MonitorContract
     public function getName($connection = null)
     {
         return $connection ?: $this->getDefaultDriver();
-    }
-
-    /**
-     * Get the queue name prefix.
-     *
-     * @return string
-     */
-    public function getQueuePrefix()
-    {
-        return $this->app['config']->get('queue.prefix');
     }
 
     /**

@@ -12,6 +12,11 @@ use App\Banner;
 use App\Http\Models\ProductsFilter;
 use Session;
 use App\Product_line;
+// include composer autoload
+
+// import the Intervention Image Manager Class
+use Intervention\Image\ImageManagerStatic as Image;
+
 class MainController extends Controller{
     public function __construct(){
         $this->middleware('auth', ["except" => ['show',"home","about","index"]]);
@@ -41,7 +46,7 @@ class MainController extends Controller{
     public function index(Request $request){
         //dd($request);
         $product_line = Product_line::all();
-        $products = ProductsFilter::getProducts($request->nombre,$request->pricing,$product->line);
+        $products = ProductsFilter::getProducts($request->nombre,$request->pricing,$request->line);
         $banners = Banner::where('type_image', 0)->orderBy('id', 'desc')->limit(3)->get();
         
         return view('main.home', ["products" => $products, 'tipo' => 'Todos Los Productos', 'banners' => $banners, "request" =>$request, 'product_line' => $product_line]);
@@ -249,6 +254,12 @@ class MainController extends Controller{
         
 
         return redirect('/about');
+    }
+
+    public function fix_image(){
+        $product = Product::find(114);
+        $jpg = Image::make(url("products/images/$product->id.$product->extension"));
+        $jpg->save('storage/app/images/bar.jpg', 60);
     }
 
 }

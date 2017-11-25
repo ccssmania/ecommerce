@@ -20,8 +20,12 @@
 				<select class="form-control" name="product_type" required>
 					<option value="">Selecciona Uno</option>
 					@foreach($product_line as $line)
-						@php $selected = $product->product_line->name == $line->name ? 'selected' : '';@endphp
-						<option value="{{$line->id}}" {{$selected}} > {{$line->nombre}} </option>
+						@if(isset($product) && isset($product->product_line))
+							@php $selected = $product->product_line->name == $line->name ? 'selected' : '';@endphp
+							<option value="{{$line->id}}" {{$selected}} > {{$line->nombre}} </option>
+						@else
+							<option value="{{$line->id}}" > {{$line->nombre}} </option>
+						@endif
 					@endforeach
 				</select>
 			</div>
@@ -51,7 +55,7 @@
 		<div class="form-group">
 			<label class="control-label col-md-4">Descripción</label>
 			<div class="col-md-6">
-				<textarea class="textarea" name="descripcion" required > {{$product->description ? $product->description : ''}} </textarea>
+				<textarea class="textarea" name="descripcion" required > {{$product->description ? $product->description : ' '}} </textarea>
 			</div>
 		</div>
 		@php $checked = ""; $product->medida == 1 ? $checked = "checked" : $checked = ''; @endphp
@@ -105,6 +109,38 @@
 		<div class="form-group" id="button2" style="display: none;">
 			
 		</div>
+		
+
+		<!-- #######################  -->
+
+		@php $checked = ""; $product->marca == 1 ? $checked = "checked" : $checked = ''; @endphp
+		<div class="form-group">
+			<label class="control-label col-md-4">Marcas</label>
+			<div class="col-md-6">
+				<input type="checkbox" id="check_marca" name="marca" onclick="check4(this);" {{$checked}}>
+			</div>
+		</div>
+
+		<div class="form-group" id="div2">
+			@if($product->marca == 1)
+					
+					@foreach($marcas as $marca)
+						<input type="hidden" name="" value=" {{$marca->nombre}}//{{$marca->Precio}} ">
+						<label class="control-label col-md-3">marca</label>
+						<div class="col-md-3">
+							<input type="text" class="form-control" name="marcas[]"  value="{{$marca->nombre}}">
+						</div>
+						<label class="col-md-1 control-label">Precio</label>
+						<div class="col-md-3">
+							<input type="number" name="precios_marcas[]" class="form-control" value="{{(integer)$marca->precio}}">
+						</div>
+					@endforeach
+			@endif
+		</div>
+		<div class="form-group" id="button3" style="display: none;">
+			
+		</div>
+
 		<div class="form-group">
 			
 			<div class="col-md-6 col-md-offset-4">

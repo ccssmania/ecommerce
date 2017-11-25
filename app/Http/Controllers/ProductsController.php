@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Medida;
 use App\Product_line;
 use App\Color;
+use App\Marca;
 use Session;
 class ProductsController extends Controller
 {
@@ -77,7 +78,24 @@ class ProductsController extends Controller
                         }
                 }
             }
-            if(isset($request->colors) && count($request->medidas) > 0){
+            if(isset($request->marcas) && count($request->marcas) > 0){
+                $i = 0;
+                $precios = $request->precios_marcas;
+                foreach ($request->marcas as $marca) {
+                    $newM = new Marca;
+                    $newM->idproduct = $product->id;
+                    $newM->nombre = $marca;
+                    $newM->precio = $precios[$i];
+                    $i++;
+                    if($newM->nombre != '')
+                        if($newM->save()) {
+                            $product->marca = 1;
+                            $product->save();
+                        }
+                }
+            }
+            
+            if(isset($request->colors) && count($request->colors) > 0){
                 foreach ($request->colors as $color) {
                     $newC = new Color;
                     $newC->product_id = $product->id;
@@ -123,8 +141,9 @@ class ProductsController extends Controller
         $product = Product::find($id);
         $product_line = Product_line::all();
         $medidas = Medida::where('idproduct', $product->id)->get();
+        $marcas = $product->marcas;
         $colors = Color::where('product_id', $product->id)->get();
-        return view("products.edit", compact('product','medidas', 'product_line','colors'));
+        return view("products.edit", compact('product','medidas', 'product_line','colors','marcas'));
     }
 
     /**
@@ -168,7 +187,34 @@ class ProductsController extends Controller
             }
             $product->medida = 0;
         }
-        if(isset($request->colors) && count($request->medidas) > 0){
+        //--------------------------------------MARCAS---------------------------
+        if(isset($request->marcas) && count($request->marcas) > 0){
+            if(isset($marcas)){
+                foreach ($marcas as $marca) {
+                    $marca->delete();
+                }
+            }
+            $i = 0;
+            $precios = $request->precios_medidas;
+            foreach ($request->marcas as $marca) {
+                $newM = new marca;
+                $newM->idproduct = $product->id;
+                $newM->nombre = $marca;
+                $newM->precio = $precios[$i];
+                $i++;
+                if($newM->nombre != '')
+                    if($newM->save()) $product->marca = 1;
+            }
+        }elseif(!isset($request->marca) && isset($product->marcas)){
+            if(isset($product->marcas)){
+                foreach ($product->marcas as $marca) {
+                    $marca->delete();
+                }
+            }
+            $product->marca = 0;
+        }
+        //-------------------------------------------------------------------------------------
+        if(isset($request->colors) && count($request->colors) > 0){
             if(isset($colors)){
                 foreach ($colors as $color) {
                     $color->delete();

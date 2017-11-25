@@ -4,6 +4,7 @@ $.fn.editable.defaults.ajaxOptions = {type: 'PUT'};
 $(document).ready(function(){
 	check();
 	check2();
+	check3();
 	$(".textarea").summernote();
 	$(".set-guide-number").editable();
 	$(".select-status").editable({
@@ -77,6 +78,18 @@ function check2(){
 		var $div = $("#button2");
 		var _label = $('<label class="control-label col-md-4">Agregar Color</label>');
 		var _button = $('<div class="col-md-2"><button type="button" class="btn btn-primary" onclick="return addColor(this);">Agregar </button></div>');
+		$div.append(_label);
+		$div.append(_button);
+
+		$div.show();
+
+	}
+}
+function check3(){
+	if($("#check_marca").attr("checked") == "checked"){
+		var $div = $("#button3");
+		var _label = $('<label class="control-label col-md-4">Agregar Marca</label>');
+		var _button = $('<div class="col-md-2"><button type="button" class="btn btn-primary" onclick="return addMarca(this);">Agregar </button></div>');
 		$div.append(_label);
 		$div.append(_button);
 

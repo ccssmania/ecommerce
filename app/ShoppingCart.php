@@ -45,14 +45,16 @@ class ShoppingCart extends Model
         foreach ($in_shopping_carts as $in) {
             $product = $in->product;
             
-            if(isset($in->medida_id)){
+            if(isset($in->medida_id) && !isset($in->marca_id)){
                 $medida = Medida::find($in->medida_id);
-                if(isset($medida->precio) && $medida->precio > 0){
+                if(isset($medida->precio) && $medida->precio > 0 ){
                     $total += ($medida->precio * $in->cantidad);
 
                 }else{
                     $total += ($product->pricing * $in->cantidad);
                     }
+            }elseif(isset($in->marca_id) && $in->marca->precio > 0){
+                    $total += ($in->marca->precio * $in->cantidad);
             }else{
                 $total += ($product->pricing * $in->cantidad);
             }

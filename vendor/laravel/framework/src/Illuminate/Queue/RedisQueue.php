@@ -135,7 +135,7 @@ class RedisQueue extends Queue implements QueueContract
      * @param  string  $job
      * @param  mixed   $data
      * @param  string  $queue
-     * @return string
+     * @return array
      */
     protected function createPayloadArray($job, $data = '', $queue = null)
     {
@@ -256,7 +256,7 @@ class RedisQueue extends Queue implements QueueContract
      */
     protected function getQueue($queue)
     {
-        return 'queues:'.$this->getQueuePrefix().($queue ?: $this->default);
+        return 'queues:'.($queue ?: $this->default);
     }
 
     /**

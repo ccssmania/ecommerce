@@ -28,7 +28,7 @@ class ProductsFilter {
         
         $products->orderBy('title');
         
-        return $products->paginate(15);
+        return $products->paginate(12);
         
     }
     

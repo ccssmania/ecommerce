@@ -79,7 +79,9 @@
 						<th>Producto</th>
 						<th>Cantidad</th>
 						<th>Valor Unitario</th>
+						<th>Marca</th>
 						<th> Medida </th>
+						<th> Color </th>
 					</tr>
 				</thead>
 				<tbody>
@@ -87,12 +89,16 @@
 						<tr>
 							<th> {{$in->product->title}} </th>
 							<th> {{$in->cantidad}} </th>
-							@if(isset($in->medida_id) && $in->medida->precio > 0)
+							@if(isset($in->medida_id) && $in->medida->precio > 0 && !isset($in->marca))
 								<td> ${{$in->medida->precio}} </td>
+							@elseif(isset($in->marca) && $in->marca->precio > 0)
+								<td>${{$in->marca->precio}}</td>
 							@else
 								<td>${{$in->product->pricing}} </td>
 							@endif
+							<th>{{$in->marca ? $in->marca->nombre : '' }}</th>
 							<th> {{$in->medida ? $in->medida->nombre : ''}} </th>
+							<th> {{$in->color ? $in->color->name : ''}} </th>
 						</tr>
 					@endforeach
 				</tbody>

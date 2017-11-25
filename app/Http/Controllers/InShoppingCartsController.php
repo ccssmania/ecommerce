@@ -26,19 +26,24 @@ class InShoppingCartsController extends Controller
     {
         $shopping_cart = $request->shopping_cart;
         $idMedida = explode("//",$request->idmedida);
+        $idMarca = explode("//", $request->idmarca);
         if(isset($idMedida) && count($idMedida) > 1){
 
             $response = InShoppingCart::create([
                 "shopping_cart_id" => $shopping_cart->id,
                 "product_id" => $request->product_id,
                 "cantidad" => $request->cantidad,
-                "medida_id" => $idMedida[0]
+                "medida_id" => $idMedida[0],
+                "color_id" => $request->idcolor ? $request->idcolor : null,
+                "marca_id" => $request->idmarca ? $idMarca[0] : null
             ]);
         }else{
             $response = InShoppingCart::create([
             "shopping_cart_id" => $shopping_cart->id,
             "product_id" => $request->product_id,
-            "cantidad" => $request->cantidad
+            "cantidad" => $request->cantidad,
+            "color_id" => $request->idcolor ? $request->idcolor : null,
+            "marca_id" => $request->idmarca ? $idMarca[0] : null
         ]);
         }
 

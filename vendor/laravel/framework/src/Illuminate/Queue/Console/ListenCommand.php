@@ -15,7 +15,7 @@ class ListenCommand extends Command
      */
     protected $signature = 'queue:listen
                             {connection? : The name of connection}
-                            {--delay=0 : Amount of time to delay failed jobs}
+                            {--delay=0 : The number of seconds to delay failed jobs}
                             {--force : Force the worker to run even in maintenance mode}
                             {--memory=128 : The memory limit in megabytes}
                             {--queue= : The queue to listen on}
@@ -79,11 +79,9 @@ class ListenCommand extends Command
     {
         $connection = $connection ?: $this->laravel['config']['queue.default'];
 
-        $queue = $this->input->getOption('queue') ?: $this->laravel['config']->get(
+        return $this->input->getOption('queue') ?: $this->laravel['config']->get(
             "queue.connections.{$connection}.queue", 'default'
         );
-
-        return $this->laravel['config']->get('queue.prefix').$queue;
     }
 
     /**

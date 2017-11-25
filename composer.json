@@ -6,10 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "anouar/paypalpayment": "~1.0",
+        "intervention/image": "^2.4",
+        "intervention/imagecache": "^2.3",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "laravelcollective/html": "5.4.*@dev",
-        "anouar/paypalpayment": "~1.0"
+        "laravelcollective/html": "5.4.*@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

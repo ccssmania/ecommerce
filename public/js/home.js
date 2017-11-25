@@ -55,6 +55,44 @@ function check3(obj){
 	}
 }
 
+function check4(obj){
+	if(obj.checked == true){
+		if(document.getElementById("check").checked == true){
+			if(confirm('ALERTA : ¡Si los campos de medidas tiene precio y ademas las siguientes marcas tendran precio, solo se tomara el precio de las marcas y no el precio de las medidas!')){
+				var $div = $("#button3");
+				var _label = $('<label class="control-label col-md-4">Agregar Marca</label>');
+				var _button = $('<div class="col-md-2"><button type="button" class="btn btn-primary" onclick="return addMarca(this);">Agregar </button></div>');
+				$div.append(_label);
+				$div.append(_button);
+
+				$div.show();
+			}
+		}else{
+			var $div = $("#button3");
+			var _label = $('<label class="control-label col-md-4">Agregar Marca</label>');
+			var _button = $('<div class="col-md-2"><button type="button" class="btn btn-primary" onclick="return addMarca(this);">Agregar </button></div>');
+			$div.append(_label);
+			$div.append(_button);
+
+			$div.show();
+		}
+
+	}else{
+		if(confirm('¿comfirma quitar las marcas?')){
+			var button = document.getElementById("button3");
+			var div = document.getElementById("div2");
+			while(button.firstChild){
+				button.removeChild(button.firstChild);
+			}
+			while(div.firstChild){
+				div.removeChild(div.firstChild);
+			}
+	    }
+	}
+
+
+}
+
 function addColor(obj){
 	var $div = $("#div1");
 	//var _hidden = $('')
@@ -74,12 +112,27 @@ function addMedida(obj){
 	$div.append(_button);
 	$div.append(_precios);
 }
+function addMarca(obj){
+	var $div = $("#div2");
+	//var _hidden = $('')
+	var _label = $('<label class="control-label col-md-3">Nueva marca</label>');
+	var _button = $('<div class="col-md-3"><input type="text" class="form-control" name="marcas[]"></div>');
+	var _precios = $('<label class="col-md-1 control-label">Precio</label><div class="col-md-3"><input type="number" name="precios_marcas[]" class="form-control" value=""></div>')
+	$div.append(_label);
+	$div.append(_button);
+	$div.append(_precios);
+}
 
-function sendPrice(obj){
+
+function sendPrice(obj,id){
+
 	var precio = obj.val().split("//");
-	var $h4 = $("#precio");
-	if(precio[1] > 0)
-		$h4.text(precio[1]);
-	else
-		$h4.text($("#realPrecio").val());
+	var $h4 = $("#precio_"+id);
+	if(precio[1] > 0){
+		$h4.text("$"+precio[1]);
+
+	}
+	else{
+		$h4.text("$"+$("#realPrecio_"+id).val());
+	}
 }

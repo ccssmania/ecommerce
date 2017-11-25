@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'MainController@home');
-
+Route::get('/fix_image',"MainController@fix_image");
 Route::get('/carrito','ShoppingCartsController@index');
 Route::post('/carrito','ShoppingCartsController@checkout');
 Route::post('/payments','PaymentsController@create');

@@ -24,6 +24,14 @@ class Product extends Model
     public function medidas(){
         return ProductMedida::getMedida($this->id);
     }
+
+    public function marcas(){
+        return $this->hasMany("App\Marca","idproduct");
+    }
+
+    public function colores(){
+        return $this->hasMany('App\Color','product_id');
+    }
     
 
     public function delete_status(){

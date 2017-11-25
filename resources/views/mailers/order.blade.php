@@ -401,7 +401,7 @@
                                                     <tr>
                                                         <td valign="top" class="bodyContent">
                                                             <div mc:edit="std_content00">
-                                                                <h1 class="h1">Recibo De Tu Pago En HEALTH CARE</h1>
+                                                                <h1 class="h1">Recibo De Tu Pedido En HEALTH CARE</h1>
                                                                 <strong>!Hola¡ {{$order->email}}</strong>
                                                                 Te enviamoslos datos de tu orden
                                                             </div>
@@ -492,7 +492,7 @@
 																<br />
 																<strong>Our mailing address is:</strong>
 																<br />
-																ccss@utp.edu.co
+																{{$contact->email}}
                                                             </div>
                                                         </td>
                                                     </tr>

@@ -464,7 +464,7 @@
                                                     	<td valign="top" class="bodyContent">
                                                     		<div mc:edit="std_content01">
                                                     			Si algun dato esta erroneo comunicate a 
-                                                    			<a href="mailto:correo">correo@healthcare.co</a>
+                                                    			<a href="mailto:correo">{{$contact->email}}</a>
                                                     		</div>
                                                     	</td>
                                                     </tr>
@@ -509,7 +509,7 @@
 																<br />
 																<strong>Our mailing address is:</strong>
 																<br />
-																ccss@utp.edu.co
+																{{$contact->email}}
                                                             </div>
                                                         </td>
                                                     </tr>

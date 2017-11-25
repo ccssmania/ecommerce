@@ -30,13 +30,6 @@ abstract class Queue
     protected $connectionName;
 
     /**
-     * The queue prefix.
-     *
-     * @var string
-     */
-    protected $queuePrefix;
-
-    /**
      * Push a new job onto the queue.
      *
      * @param  string  $queue
@@ -93,7 +86,9 @@ abstract class Queue
         $payload = json_encode($this->createPayloadArray($job, $data, $queue));
 
         if (JSON_ERROR_NONE !== json_last_error()) {
-            throw new InvalidPayloadException;
+            throw new InvalidPayloadException(
+                'Unable to JSON encode payload. Error code: '.json_last_error()
+            );
         }
 
         return $payload;
@@ -183,29 +178,6 @@ abstract class Queue
         $this->connectionName = $name;
 
         return $this;
-    }
-
-    /**
-     * Set the queue name prefix.
-     *
-     * @param  string  $prefix
-     * @return $this
-     */
-    public function setQueuePrefix($prefix = null)
-    {
-        $this->queuePrefix = $prefix;
-
-        return $this;
-    }
-
-    /**
-     * Get the queue name prefix.
-     *
-     * @return string
-     */
-    public function getQueuePrefix()
-    {
-        return $this->queuePrefix;
     }
 
     /**

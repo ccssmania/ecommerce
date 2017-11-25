@@ -6,12 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Contact;
 
 class OrderCreated extends Mailable
 {
     use Queueable, SerializesModels;
     public $order;
     public $products;
+    public $contact;
     /**
      * Create a new message instance.
      *
@@ -21,6 +23,7 @@ class OrderCreated extends Mailable
     {
         $this->order = $order;
         $this->products = $order->shopping_cart->products()->get();
+        $this->contact = Contact::find(1);
     }
 
     /**
